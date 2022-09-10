@@ -1,26 +1,59 @@
+import { useState } from "react";
 import axios from "axios";
 
 export default function ProductForm() {
+  const [product, setProduct] = useState({
+    name: "",
+    description: "",
+    price: 0,
+  });
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    const response = await axios.post("/api/products", {
-      name: "product 1",
-      description: "Some description",
-      price: 1000,
-    });
+    const response = await axios.post("/api/products", product);
     console.log(response);
   };
 
-  return (
-    <form method="POST" action="/api/products" onSubmit={handleSubmit}>
-      <label htmlFor="name">Name:</label>
-      <input type="text" name="name" />
-      <label htmlFor="price">Price:</label>
-      <input type="text" name="price" />
-      <label htmlFor="description">Description:</label>
-      <textarea name="description" rows="2"></textarea>
+  const handleChange = ({ target: { name, value } }) => {
+    setProduct({ ...product, [name]: value });
+  };
 
-      <button>Save product</button>
-    </form>
+  return (
+    <div className="w-full max-w-xs">
+      <form
+        method="POST"
+        action="/api/products"
+        onSubmit={handleSubmit}
+        className="bg-white shadow-2xl rounded px-8 pt-6 pb-8 mb-4"
+      >
+        <label htmlFor="name">Name:</label>
+        <input
+          type="text"
+          name="name"
+          onChange={handleChange}
+          className="shadow border rounded py-2 px-3 text-gray-700"
+        />
+
+        <label htmlFor="price">Price:</label>
+        <input
+          type="text"
+          name="price"
+          onChange={handleChange}
+          className="shadow border rounded py-2 px-3 text-gray-700"
+        />
+
+        <label htmlFor="description">Description:</label>
+        <textarea
+          name="description"
+          rows="2"
+          onChange={handleChange}
+          className="shadow border rounded py-2 px-3 text-gray-700"
+        ></textarea>
+
+        <button className="bg-blue-500 hover:bg-blue-600 py-2 px-4 rounded text-white">
+          Save product
+        </button>
+      </form>
+    </div>
   );
 }
