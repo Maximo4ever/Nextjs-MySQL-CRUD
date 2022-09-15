@@ -21,6 +21,12 @@ export default function ProductView({ product }) {
       >
         Delete
       </button>
+      <button
+        className="bg-gray-500 py-1 px-4 ml-2 text-white hover:bg-gray-700"
+        onClick={() => router.push("/products/edit/" + product.id)}
+      >
+        Edit
+      </button>
     </Layout>
   );
 }
