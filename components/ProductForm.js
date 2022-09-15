@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function ProductForm() {
   const [product, setProduct] = useState({
@@ -7,11 +8,13 @@ export default function ProductForm() {
     description: "",
     price: 0,
   });
+  const router = useRouter();
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     const response = await axios.post("/api/products", product);
     console.log(response);
+    router.push("/");
   };
 
   const handleChange = ({ target: { name, value } }) => {
